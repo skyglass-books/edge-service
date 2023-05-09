@@ -15,5 +15,5 @@ public class RateLimiterConfig {
 				.map(Principal::getName)
 				.defaultIfEmpty("anonymous");
 	}
-	
+
 }
