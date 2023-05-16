@@ -7,7 +7,7 @@ on:
 concurrency: acceptance
 
 env:
-  OWNER: polarbookshop
+  OWNER: skyglass-books
   REGISTRY: ghcr.io
   APP_REPO: edge-service
   DEPLOY_REPO: polar-deployment
