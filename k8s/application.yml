@@ -1,6 +1,8 @@
 spring:
   redis:
     host: polar-redis
+    username: user
+    password: default
   security:
     oauth2:
       client:
