@@ -1,5 +1,9 @@
 package com.polarbookshop.edgeservice.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import reactor.core.publisher.Mono;
 
 import org.springframework.context.annotation.Bean;
@@ -60,6 +64,11 @@ public class SecurityConfig {
 			}));
 			return chain.filter(exchange);
 		};
+	}
+
+	@Bean
+	public JwtDecoder jwtDecoder(@Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri) {
+		return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).jwsAlgorithm(SignatureAlgorithm.RS256).build();
 	}
 
 }
