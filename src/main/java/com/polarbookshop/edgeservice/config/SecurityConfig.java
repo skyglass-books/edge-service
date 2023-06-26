@@ -44,8 +44,7 @@ public class SecurityConfig {
 						.authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)))
 				.oauth2Login(Customizer.withDefaults())
 				.logout(logout -> logout.logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository)))
-				//.csrf(csrf -> csrf.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()))
-				.cors().and().csrf().disable()
+				.csrf(csrf -> csrf.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()))
 				.build();
 	}
 
@@ -55,7 +54,7 @@ public class SecurityConfig {
 		return oidcLogoutSuccessHandler;
 	}
 
-	@Bean
+	/*@Bean
 	WebFilter csrfWebFilter() {
 		// Required because of https://github.com/spring-projects/spring-security/issues/5766
 		return (exchange, chain) -> {
@@ -65,7 +64,7 @@ public class SecurityConfig {
 			}));
 			return chain.filter(exchange);
 		};
-	}
+	}*/
 
 	/*@Bean
 	public JwtDecoder jwtDecoder(@Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri) {
