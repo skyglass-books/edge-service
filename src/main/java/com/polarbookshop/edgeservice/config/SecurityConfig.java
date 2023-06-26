@@ -1,9 +1,16 @@
 package com.polarbookshop.edgeservice.config;
 
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.reactive.function.client.WebClientCustomizer;
+import org.springframework.http.client.reactive.ClientHttpConnector;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import org.springframework.context.annotation.Bean;
@@ -22,6 +29,9 @@ import org.springframework.security.web.server.authentication.logout.ServerLogou
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.web.server.WebFilter;
+import reactor.netty.http.client.HttpClient;
+
+import javax.net.ssl.SSLException;
 
 @EnableWebFluxSecurity
 public class SecurityConfig {
@@ -54,7 +64,7 @@ public class SecurityConfig {
 		return oidcLogoutSuccessHandler;
 	}
 
-	/*@Bean
+	@Bean
 	WebFilter csrfWebFilter() {
 		// Required because of https://github.com/spring-projects/spring-security/issues/5766
 		return (exchange, chain) -> {
@@ -64,11 +74,33 @@ public class SecurityConfig {
 			}));
 			return chain.filter(exchange);
 		};
-	}*/
+	}
 
-	/*@Bean
-	public JwtDecoder jwtDecoder(@Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") String jwkSetUri) {
-		return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).jwsAlgorithm(SignatureAlgorithm.RS256).build();
-	}*/
+	@Bean
+	public WebClientCustomizer insecureSslCustomizer() {
+		return (WebClient.Builder webClientBuilder) -> {
+			webClientBuilder
+					.clientConnector(getInsecureSslClientConnector());
+		};
+	}
+
+	private ClientHttpConnector getInsecureSslClientConnector(){
+		HttpClient httpClient = HttpClient.create()
+				.secure(sslContextSpec -> sslContextSpec.sslContext(getInsecureSslContext()));
+		return new ReactorClientHttpConnector(httpClient);
+	}
+
+	private SslContext getInsecureSslContext() {
+		try {
+			// Disable SSL certificate verification
+			SslContext sslContext = SslContextBuilder.forClient()
+					.trustManager(InsecureTrustManagerFactory.INSTANCE)
+					.build();
+			return sslContext;
+		} catch (SSLException e) {
+			//ignore
+		}
+		return null;
+	}
 
 }
