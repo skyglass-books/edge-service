@@ -100,7 +100,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${spring.keycloak.server-url}/realms/PolarBookshop
-          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+          # jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 resilience4j:
   circuitbreaker:
