@@ -74,6 +74,19 @@ spring:
             - name: CircuitBreaker
               args:
                 name: orderCircuitBreaker
+        - id: catalog-swagger-ui
+          uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/books
+          predicates:
+            - Path=/swagger-ui/**
+        - id: catalog-swagger-ui-webjars
+          uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/books
+          predicates:
+            - Path=/webjars/**
+        - id: catalog-openapi
+          uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/books
+          predicates:
+            - Path=/openapi/**
+
   redis:
     connect-timeout: 20s
     host: localhost

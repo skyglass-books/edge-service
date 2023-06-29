@@ -47,8 +47,9 @@ public class SecurityConfig {
 				.authorizeExchange(exchange -> exchange
 						.pathMatchers("/actuator/**", "/books/actuator/**").permitAll()
 						.pathMatchers("/", "/*.css", "/*.js", "/favicon.ico").permitAll()
-						.pathMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
-						.pathMatchers(HttpMethod.GET, "/books/api/**").permitAll()
+						.pathMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**",
+								"/openapi/**", "/webjars/**", "/oauth2/**", "/login/**", "/error/**").permitAll()
+						.pathMatchers(HttpMethod.GET, "/books/**").permitAll()
 						.anyExchange().authenticated()
 				)
 				.exceptionHandling(exceptionHandling -> exceptionHandling
