@@ -86,6 +86,10 @@ spring:
           uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/books
           predicates:
             - Path=/openapi/**
+        - id: catalog-api-docs
+          uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/books
+          predicates:
+            - Path=/v3/api-docs/**
 
   redis:
     connect-timeout: 20s
