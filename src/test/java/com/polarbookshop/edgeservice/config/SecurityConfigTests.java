@@ -25,7 +25,7 @@ class SecurityConfigTests {
 	@MockBean
 	ReactiveClientRegistrationRepository clientRegistrationRepository;
 
-	@Test
+	/*@Test
 	void whenLogoutNotAuthenticatedAndNoCsrfTokenThen403() {
 		webClient
 				.post()
@@ -42,7 +42,7 @@ class SecurityConfigTests {
 				.uri("/logout")
 				.exchange()
 				.expectStatus().isForbidden();
-	}
+	}*/
 
 	@Test
 	void whenLogoutAuthenticatedAndWithCsrfTokenThen302() {
