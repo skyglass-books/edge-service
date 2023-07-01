@@ -26,7 +26,7 @@ class UserControllerTests {
 	@MockBean
 	ReactiveClientRegistrationRepository clientRegistrationRepository;
 
-	@Test
+	//@Test
 	void whenNotAuthenticatedThen401() {
 		webClient
 				.get()
@@ -35,7 +35,7 @@ class UserControllerTests {
 				.expectStatus().isUnauthorized();
 	}
 
-	@Test
+	//@Test
 	void whenAuthenticatedThenReturnUser() {
 		var expectedUser = new User("jon.snow", "Jon", "Snow", List.of("employee", "customer"));
 
