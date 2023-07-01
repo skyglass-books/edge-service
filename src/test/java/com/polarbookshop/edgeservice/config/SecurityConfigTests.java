@@ -1,8 +1,6 @@
 package com.polarbookshop.edgeservice.config;
 
 import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Mono;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -12,6 +10,7 @@ import org.springframework.security.oauth2.client.registration.ReactiveClientReg
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 
 import static org.mockito.Mockito.when;
 
@@ -25,7 +24,7 @@ class SecurityConfigTests {
 	@MockBean
 	ReactiveClientRegistrationRepository clientRegistrationRepository;
 
-	/*@Test
+	@Test
 	void whenLogoutNotAuthenticatedAndNoCsrfTokenThen403() {
 		webClient
 				.post()
@@ -42,7 +41,7 @@ class SecurityConfigTests {
 				.uri("/logout")
 				.exchange()
 				.expectStatus().isForbidden();
-	}*/
+	}
 
 	@Test
 	void whenLogoutAuthenticatedAndWithCsrfTokenThen302() {
